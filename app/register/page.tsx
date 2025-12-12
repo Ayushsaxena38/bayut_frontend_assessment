@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import axios from "axios";
 import Navbar from "@/components/Navbar";
 import { ArrowLeft } from "lucide-react";
+import api from "../utils/api";
 
 export default function RegisterPage() {
   // State for multi-step flow
@@ -22,7 +22,7 @@ export default function RegisterPage() {
 
     try {
 
-      await axios.post("http://localhost:3000/api/users/check-email", { email: formData.email });
+      await api.post("/check-email", { email: formData.email });
       
       // If successful, move to next step
       setStep(2);
@@ -42,7 +42,7 @@ export default function RegisterPage() {
 
     try {
       // REPLACE with your actual create user API
-      await axios.post("http://localhost:3000/api/users/create", formData);
+      await api.post("/create", formData);
       alert("Account created successfully! Please login.");
       window.location.href = "/login";
     } catch (err: any) {

@@ -2,8 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import Navbar from "@/components/Navbar";
+import api from "../utils/api";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function LoginPage() {
 
     try {
       // REPLACE with your actual backend URL
-      const response = await axios.post("http://localhost:3000/api/users/login", formData);
+      const response = await api.post("/login", formData);
       
       // Assuming backend returns a token
       if (response.data.access_token) {
@@ -26,7 +26,7 @@ export default function LoginPage() {
         router.push("/"); // Redirect to home
       }
     } catch (err: any) {
-      console.error(err);
+      console.log(err);
       setError("Invalid credentials or server error");
     } finally {
       setLoading(false);
